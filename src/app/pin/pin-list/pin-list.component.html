@@ -1,23 +1,23 @@
-
-<table *ngIf="pins && pins.length > 0; else noData" class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">Title</th>
-    <th scope="col">Image</th>
-    <th scope="col">Collaborators</th>
-    <th scope="col">Privacy</th>
-  </tr>
-  </thead>
-  <tbody>
+<div class="table-responsive" *ngIf="pins && pins.length > 0; else noData">
+  <table class="table table-hover table-striped table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Image</th>
+      <th scope="col">Collaborators</th>
+      <th scope="col">Privacy</th>
+    </tr>
+    </thead>
+    <tbody>
     <ng-container *ngFor="let pin of pins">
       <tr>
         <td>{{ pin.title }}</td>
         <td>
-                      <img
-                        [src]="pin.image"
-                        [alt]="pin.title"
-                        width="50px"
-                      />
+          <img
+            [src]="pin.image"
+            [alt]="pin.title"
+            width="100px"
+          />
         </td>
         <td>
           @for (collaborator of pin.collaborators; track collaborator.email) {
@@ -27,8 +27,10 @@
         <td>{{ pin.privacy.toUpperCase() }}</td>
       </tr>
     </ng-container>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
+
 <ng-template #noData>
   <p class="text-center text-muted">No Data</p>
 </ng-template>
