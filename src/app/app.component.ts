@@ -1,11 +1,8 @@
 import {Component} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterOutlet} from '@angular/router';
-import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PinData} from "./utils/interface";
 import {PrivacyOptions} from "./utils/enum";
 import {CustomerComponent} from "./customer/customer.component";
-import {HttpClientModule} from "@angular/common/http";
 import {CreatePinComponent} from "./pin/create-pin/create-pin.component";
 
 
@@ -20,8 +17,6 @@ const PINS: PinData[] = [
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet, NgbTooltip, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
