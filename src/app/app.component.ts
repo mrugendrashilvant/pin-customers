@@ -5,6 +5,7 @@ import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {PinData} from "./utils/interface";
 import {PrivacyOptions} from "./utils/enum";
 import {CustomerComponent} from "./customer/customer.component";
+import {HttpClientModule} from "@angular/common/http";
 
 
 const PINS: PinData[] = [
@@ -19,7 +20,7 @@ const PINS: PinData[] = [
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NgbTooltip],
+  imports: [CommonModule, RouterOutlet, NgbTooltip, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

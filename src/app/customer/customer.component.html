@@ -1,43 +1,62 @@
-
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
-    <button type="button" data-dismiss="modal" class="btn-close" (click)="modal.close()" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <form #form="ngForm" [formGroup]="registerUser" (ngSubmit)="onSubmit($event)" class="form">
-      <div class="card mt-3">
-        <div class="card-body">
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="email" formControlName="email" class="form-control"
-                   [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.email.invalid }">
-            <div *ngIf="form.submitted && registerUser.controls.email.invalid" class="text-danger">
-              <small *ngIf="registerUser.controls.email.errors?.['required']">Email is required.</small>
-              <small *ngIf="registerUser.controls.email.errors?.['email']">Email is invalid.</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input id="name" type="text" formControlName="name" class="form-control"
-                   [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.name.invalid }">
-<!--            <div *ngIf="form.submitted && controls.password.invalid" class="text-danger">-->
-<!--              <small *ngIf="controls.password.errors?.required">Password is required.</small>-->
-<!--            </div>-->
-          </div>
-          <div class="form-group">
-            <label for="region">Region</label>
-            <input id="region" type="text" formControlName="region" class="form-control"
-                   [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.region.invalid }">
-
-            <div *ngIf="form.submitted && registerUser.controls.region.invalid" class="text-danger">
-              <small *ngIf="registerUser.controls.region.errors?.['required']">Password is required.</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Add Customer</button>
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Add Customer</h4>
+  <button type="button" data-dismiss="modal" class="btn-close" (click)="modal.close()" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+  <form #form="ngForm" [formGroup]="registerUser" (ngSubmit)="onSubmit($event)" class="form">
+    <div class="card mt-3">
+      <div class="card-body">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" formControlName="email" class="form-control"
+                 [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.email.invalid }">
+          <div *ngIf="form.submitted && registerUser.controls.email.invalid" class="text-danger">
+            <small *ngIf="registerUser.controls.email.errors?.['required']">Email is required.</small>
+            <small *ngIf="registerUser.controls.email.errors?.['email']">Email is invalid.</small>
           </div>
         </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" formControlName="name" class="form-control"
+                 [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.name.invalid }">
+                      <div *ngIf="form.submitted && registerUser.controls.name.invalid" class="text-danger">
+                        <small *ngIf="registerUser.controls.name.errors?.['required']">Name is required.</small>
+                      </div>
+        </div>
+        <div class="form-group">
+          <label for="region">Region</label>
+          <input id="region" type="text" formControlName="region" class="form-control"
+                 [ngbTypeahead]="search" [inputFormatter]="formatter" [resultTemplate]="regionTmp"
+                 [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.region.invalid }">
+          <ng-template #regionTmp let-r="result" let-t="term">
+            <div class="rounded-3 p-2">
+              {{ r }}
+            </div>
+          </ng-template>
+          <small *ngIf="searching" class="form-text text-muted">searching...</small>
+          <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
+          <div *ngIf="form.submitted && registerUser.controls.region.invalid" class="text-danger">
+            <small *ngIf="registerUser.controls.region.errors?.['required']">Region is required.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input id="country" type="text" formControlName="country" class="form-control"
+                 [ngbTypeahead]="searchCountry" [inputFormatter]="formatter" [resultTemplate]="countryTmp"
+                 [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.country.invalid }">
+          <ng-template #countryTmp let-r="result" let-t="term">
+            <div class="rounded-3 p-2 h-25 overflow-auto">
+              {{ r }}
+            </div>
+          </ng-template>
+          <div *ngIf="form.submitted && registerUser.controls.country.invalid" class="text-danger">
+            <small *ngIf="registerUser.controls.country.errors?.['required']">Country is required.</small>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="disabled" type="submit" class="btn btn-primary">Add Customer</button>
+        </div>
       </div>
-    </form>
-  </div>
-
+    </div>
+  </form>
+</div>
