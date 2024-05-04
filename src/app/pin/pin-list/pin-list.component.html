@@ -1,1 +1,30 @@
-<p>pin-list works!</p>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Title</th>
+    <th scope="col">Image</th>
+    <th scope="col">Collaborators</th>
+    <th scope="col">Privacy</th>
+  </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let pin of pins">
+      <tr>
+        <td>{{ pin.title }}</td>
+        <td>
+                      <img
+                        [src]="pin.image"
+                        [alt]="pin.title"
+                        width="50px"
+                      />
+        </td>
+        <td>
+          @for (collaborator of pin.collaborators; track collaborator.email) {
+            <p class="mb-0">{{collaborator.name}}</p>
+          }
+        </td>
+        <td>{{ pin.privacy.toUpperCase() }}</td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

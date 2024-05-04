@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule, NgIf} from "@angular/common";
-import {Customer} from "../../utils/interface";
+import {Customer, PinData} from "../../utils/interface";
 import {ApiHelperService} from "../../service/api-helper.service";
 import {IDropdownSettings, NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 
@@ -24,12 +24,13 @@ export class CreatePinComponent implements OnInit{
   modal = inject(NgbActiveModal);
   pinForm!:FormGroup<{
     title: FormControl<string | null>,
-    customers: FormControl<Customer[] | null>,
-    privacy: FormControl<string | null>
+    collaborators: FormControl<Customer[] | null>,
+    privacy: FormControl<string | null>,
+    image: FormControl<any|null>
   }>
-  customers!:Customer[];
+  collaborators!:Customer[];
   settings!:IDropdownSettings
-  selectedCustomers!: Customer[];
+  selectedCollaborators!: Customer[];
 
   constructor(private apiHelper: ApiHelperService) {
   }
@@ -37,7 +38,7 @@ export class CreatePinComponent implements OnInit{
   ngOnInit() {
     this.setMultiselectSettings();
     setTimeout(()=>{
-      this.customers = this.apiHelper.getCustomers();
+      this.collaborators = this.apiHelper.getCustomers();
     },)
 
     this.setForm();
@@ -63,8 +64,9 @@ export class CreatePinComponent implements OnInit{
   setForm() {
     this.pinForm = new FormGroup({
       title: new FormControl("", Validators.required),
-      customers: new FormControl(this.selectedCustomers, Validators.required),
+      collaborators: new FormControl(this.selectedCollaborators, Validators.required),
       privacy: new FormControl("", Validators.required),
+      image: new FormControl("", Validators.required),
     });
   }
 
@@ -76,8 +78,24 @@ export class CreatePinComponent implements OnInit{
     ev.preventDefault();
     this.pinForm.markAsTouched();
     if(this.pinForm.valid){
-      console.log(this.pinForm.getRawValue());
+      this.apiHelper.savePinData(this.pinForm.getRawValue() as PinData);
+      this.modal.close()
     }
+  }
 
+  async onImagePicked(ev: Event) {
+    const element = ev.currentTarget as HTMLInputElement;
+    if (element.files){
+      const file = element.files[0];
+      const toBase64 = (file:File) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
+      let dataUrl = await toBase64(file);
+      if(dataUrl)
+        this.pinForm.patchValue({image: dataUrl})
+    }
   }
 }

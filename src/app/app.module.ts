@@ -6,6 +6,7 @@ import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import {PinListComponent} from "./pin/pin-list/pin-list.component";
 
 
 
@@ -15,7 +16,7 @@ import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
     CommonModule,
     RouterOutlet, NgbTooltip, HttpClientModule,
     BrowserModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(), PinListComponent
   ],
   bootstrap: [
     AppComponent
