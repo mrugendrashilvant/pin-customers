@@ -1,1 +1,41 @@
-<button class="btn btn-primary" ngbTooltip="I'll always open to the right" placement="right">Hover me</button>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-end mb-3">
+    <p class="display-6 mb-0">List of Pins</p>
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary">Add Customer</button>
+      <button class="btn btn-primary">Add Pin</button>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Image</th>
+      <th scope="col">Collaborators</th>
+      <th scope="col">Privacy</th>
+    </tr>
+    </thead>
+    <tbody>
+      @for (pin of pins; track pin.title; let i = $index) {
+        <tr>
+          <td>{{ pin.title }}</td>
+          <td>
+<!--            <img-->
+<!--              [src]="'https://upload.wikimedia.org/wikipedia/commons/' + pin.flag"-->
+<!--              [alt]="'The flag of ' + pin.name"-->
+<!--              class="me-2"-->
+<!--              style="width: 20px"-->
+<!--            />-->
+            {{ pin.image }}
+          </td>
+          <td>
+            @for (collaborator of pin.collaborators; track collaborator.email) {
+              <p>{{collaborator.name}}</p>
+            }
+          </td>
+          <td>{{ pin.privacy }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
