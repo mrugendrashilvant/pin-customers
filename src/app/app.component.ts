@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {PinData} from "./utils/interface";
 import {PrivacyOptions} from "./utils/enum";
+import {CustomerComponent} from "./customer/customer.component";
 
 
 const PINS: PinData[] = [
@@ -25,4 +26,20 @@ const PINS: PinData[] = [
 export class AppComponent {
   title = 'pin-customers';
   pins = PINS;
+
+  constructor(private modal: NgbModal) {
+  }
+
+  openModal(type: 'customer'|'pin') {
+    switch (type) {
+      case 'customer':
+        this.modal.open(CustomerComponent, {
+          centered: true,
+          size: 'lg'
+        })
+        break;
+      case "pin":
+        break;
+    }
+  }
 }
