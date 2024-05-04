@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, map,of} from "rxjs";
+import {BehaviorSubject, map, of} from "rxjs";
 import {Collaborator, PinData} from "../utils/interface";
 
 const PARAMS = new HttpParams();
@@ -10,10 +10,15 @@ const PARAMS = new HttpParams();
 })
 export class ApiHelperService {
   pinData$: BehaviorSubject<PinData[]> = new BehaviorSubject<PinData[]>([]);
+  collaborator$: BehaviorSubject<Collaborator[]> = new BehaviorSubject<Collaborator[]>([]);
 
   constructor(
     public http: HttpClient,
-  ) { }
+  ) {
+    console.log("here")
+    this.getCustomers();
+    this.getPinData();
+  }
 
   saveCustomer(collaborator: Collaborator) {
     let collaborators = localStorage.getItem("collaboratorData");
@@ -22,6 +27,7 @@ export class ApiHelperService {
       newCollaborators = [...JSON.parse(collaborators) as Collaborator[]];
     }
     newCollaborators.push(collaborator);
+    this.collaborator$.next(newCollaborators)
     localStorage.setItem("collaboratorData", JSON.stringify(newCollaborators));
   }
 
@@ -42,6 +48,7 @@ export class ApiHelperService {
     if(collaborators) {
       newCollaborators = [...JSON.parse(collaborators) as Collaborator[]];
     }
+    this.collaborator$.next(newCollaborators);
     return newCollaborators;
   }
 
@@ -54,6 +61,12 @@ export class ApiHelperService {
       this.pinData$.next([]);
     }
     return this.pinData$;
+  }
+
+  clearData() {
+    localStorage.clear();
+    this.pinData$.next([]);
+    this.collaborator$.next([]);
   }
 
   getRegion(region:string) {

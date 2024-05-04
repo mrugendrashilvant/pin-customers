@@ -16,7 +16,7 @@
           <img
             [src]="pin.image"
             [alt]="pin.title"
-            width="100px"
+            width="125px"
           />
         </td>
         <td>
@@ -24,13 +24,18 @@
             <p class="mb-0">{{collaborator.name}}</p>
           }
         </td>
-        <td>{{ pin.privacy.toUpperCase() }}</td>
+        <td><span class="badge" [ngClass]="{'text-bg-success':pin.privacy===PrivacyOptions.PUBLIC, 'text-bg-warning':pin.privacy===PrivacyOptions.PRIVATE}" >{{ pin.privacy.toUpperCase() }}</span></td>
       </tr>
     </ng-container>
     </tbody>
   </table>
+  <div class="d-flex justify-content-end">
+    <button (click)="clearData($event)" class="btn btn-outline-danger">Clear Data</button>
+  </div>
 </div>
 
 <ng-template #noData>
-  <p class="text-center text-muted">No Data</p>
+  <p class="text-center text-muted mb-1">No Data</p>
+  <p *ngIf="!collaborators || collaborators.length === 0" class="text-center text-muted">Please start by adding <strong>Customer</strong></p>
+  <p *ngIf="collaborators && collaborators.length > 0" class="text-center text-muted">You can now <strong>Add Pin</strong> to add your Customer as a Collaborator</p>
 </ng-template>

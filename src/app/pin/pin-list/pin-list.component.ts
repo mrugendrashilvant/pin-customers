@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {PinData} from "../../utils/interface";
+import {Collaborator, PinData} from "../../utils/interface";
 import {ApiHelperService} from "../../service/api-helper.service";
 import {CommonModule} from "@angular/common";
+import {PrivacyOptions} from "../../utils/enum";
 
 @Component({
   selector: 'app-pin-list',
@@ -13,6 +14,7 @@ import {CommonModule} from "@angular/common";
 export class PinListComponent implements OnInit{
   pins!: PinData[];
   loading: boolean = true;
+  collaborators!: Collaborator[];
 
   constructor(private apiHelper: ApiHelperService) {
   }
@@ -25,5 +27,16 @@ export class PinListComponent implements OnInit{
       },
       error: error => console.log(error),
     });
+
+    this.apiHelper.collaborator$.subscribe((data: Collaborator[]) => {
+      this.collaborators = [...data];
+    })
   }
+
+  clearData(ev:MouseEvent) {
+    ev.stopPropagation();
+    this.apiHelper.clearData();
+  }
+
+  protected readonly PrivacyOptions = PrivacyOptions;
 }
