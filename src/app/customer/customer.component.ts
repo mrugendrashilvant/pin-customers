@@ -4,6 +4,7 @@ import {CommonModule} from "@angular/common";
 import {NgbActiveModal, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {catchError, debounceTime, distinctUntilChanged, Observable, of, OperatorFunction, switchMap, tap} from "rxjs";
 import {ApiHelperService} from "../service/api-helper.service";
+import {Customer} from "../utils/interface";
 
 @Component({
   selector: 'app-customer',
@@ -36,6 +37,15 @@ export class CustomerComponent {
 
   onSubmit(ev: SubmitEvent) {
     ev.preventDefault();
+    this.registerUser.markAsTouched();
+    this.registerUser.markAllAsTouched();
+    if(this.registerUser.valid){
+      this.apiHelper.saveCustomer(this.registerUser.getRawValue() as Customer);
+      this.registerUser.reset();
+      this.modal.close();
+      return;
+    }
+
   }
 
   searchCountry: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>

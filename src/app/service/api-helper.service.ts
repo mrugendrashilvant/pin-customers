@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {map, of} from "rxjs";
+import {Customer} from "../utils/interface";
 
 const PARAMS = new HttpParams();
 
@@ -12,6 +13,16 @@ export class ApiHelperService {
   constructor(
     public http: HttpClient,
   ) { }
+
+  saveCustomer(customer: Customer) {
+    let customers = localStorage.getItem("customerData");
+    let newCustomers: Customer[] = [];
+    if(customers) {
+      newCustomers = [...JSON.parse(customers) as Customer[]];
+    }
+    newCustomers.push(customer);
+    localStorage.setItem("customerData", JSON.stringify(newCustomers));
+  }
 
   getRegion(region:string) {
     if (region === '') {
