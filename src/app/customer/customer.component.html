@@ -51,6 +51,7 @@
               {{ r }}
             </div>
           </ng-template>
+          <small *ngIf="searchingCountry" class="form-text text-muted">searching...</small>
           <div *ngIf="form.submitted && registerUser.controls.country.invalid || !regionSelected" class="text-danger">
             <small *ngIf="regionSelected && registerUser.controls.country.errors?.['required']">Country is required.</small>
             <small *ngIf="!regionSelected">Please select Region first</small>

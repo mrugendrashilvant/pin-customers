@@ -28,6 +28,7 @@ export class CustomerComponent {
 
   disabled: boolean = false;
   searching: boolean = false;
+  searchingCountry: boolean = false;
   searchFailed: boolean = false;
   countrySearchFailed: boolean = true;
   regionSelected: boolean = false
@@ -52,7 +53,7 @@ export class CustomerComponent {
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap(() => this.searching = true),
+      tap(() => this.searchingCountry = true),
       switchMap((country) => {
           let region = this.registerUser.controls.region.value;
           if (region) {
@@ -63,12 +64,11 @@ export class CustomerComponent {
                 return of([]);
               }))
           }
-          console.log("select region first")
           this.regionSelected = false;
           return of([])
         }
       ),
-      tap(() => this.regionSelected = false)
+      tap(() => this.searchingCountry = false)
     )
 
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
