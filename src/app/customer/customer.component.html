@@ -26,6 +26,7 @@
         <div class="form-group">
           <label for="region">Region</label>
           <input id="region" type="text" formControlName="region" class="form-control"
+                 [editable]="false" (selectItem)="regionSelected = true"
                  [ngbTypeahead]="search" [inputFormatter]="formatter" [resultTemplate]="regionTmp"
                  [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.region.invalid }">
           <ng-template #regionTmp let-r="result" let-t="term">
@@ -42,6 +43,7 @@
         <div class="form-group">
           <label for="country">Country</label>
           <input id="country" type="text" formControlName="country" class="form-control"
+                 [editable]="false"
                  [ngbTypeahead]="searchCountry" [inputFormatter]="formatter" [resultTemplate]="countryTmp"
                  [ngClass]="{ 'is-invalid': form.submitted && registerUser.controls.country.invalid }">
           <ng-template #countryTmp let-r="result" let-t="term">
@@ -49,8 +51,9 @@
               {{ r }}
             </div>
           </ng-template>
-          <div *ngIf="form.submitted && registerUser.controls.country.invalid" class="text-danger">
-            <small *ngIf="registerUser.controls.country.errors?.['required']">Country is required.</small>
+          <div *ngIf="form.submitted && registerUser.controls.country.invalid || !regionSelected" class="text-danger">
+            <small *ngIf="regionSelected && registerUser.controls.country.errors?.['required']">Country is required.</small>
+            <small *ngIf="!regionSelected">Please select Region first</small>
           </div>
         </div>
         <div class="form-group">

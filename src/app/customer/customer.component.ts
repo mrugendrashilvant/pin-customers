@@ -29,11 +29,12 @@ export class CustomerComponent {
   searching: boolean = false;
   searchFailed: boolean = false;
   countrySearchFailed: boolean = true;
+  regionSelected: boolean = false
 
   constructor(private apiHelper: ApiHelperService) {
   }
 
-  onSubmit(ev:SubmitEvent) {
+  onSubmit(ev: SubmitEvent) {
     ev.preventDefault();
   }
 
@@ -43,20 +44,21 @@ export class CustomerComponent {
       distinctUntilChanged(),
       tap(() => this.searching = true),
       switchMap((country) => {
-        let region = this.registerUser.controls.region.value;
-        if(region){
-          return this.apiHelper.getCountry(country, region).pipe(
-            tap(() => this.countrySearchFailed = false),
-            catchError(() => {
-              this.countrySearchFailed = true;
-              return of([]);
-            }))
-        }
-
+          let region = this.registerUser.controls.region.value;
+          if (region) {
+            return this.apiHelper.getCountry(country, region).pipe(
+              tap(() => this.countrySearchFailed = false),
+              catchError(() => {
+                this.countrySearchFailed = true;
+                return of([]);
+              }))
+          }
+          console.log("select region first")
+          this.regionSelected = false;
           return of([])
         }
       ),
-      tap(() => this.searching = false)
+      tap(() => this.regionSelected = false)
     )
 
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
