@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PinData} from "./utils/interface";
 import {PrivacyOptions} from "./utils/enum";
-import {CustomerComponent} from "./customer/customer.component";
+import {CollaboratorComponent} from "./collaborator/collaborator.component";
 import {CreatePinComponent} from "./pin/create-pin/create-pin.component";
 
 
@@ -27,10 +27,10 @@ export class AppComponent {
   constructor(private modal: NgbModal) {
   }
 
-  openModal(type: 'customer'|'pin') {
+  openModal(type: 'collaborator'|'pin') {
     switch (type) {
-      case 'customer':
-        this.modal.open(CustomerComponent, {
+      case 'collaborator':
+        this.modal.open(CollaboratorComponent, {
           centered: true,
           size: 'lg'
         })

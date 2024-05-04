@@ -1,6 +1,6 @@
 import {PrivacyOptions} from "./enum";
 
-export interface Customer {
+export interface Collaborator {
   name: string,
   email:string,
   region: string,
@@ -10,6 +10,6 @@ export interface Customer {
 export interface PinData {
   title: string,
   image: string,
-  collaborators: Customer[],
+  collaborators: Collaborator[],
   privacy: PrivacyOptions
 }

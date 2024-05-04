@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {NgbActiveModal, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule, NgIf} from "@angular/common";
-import {Customer, PinData} from "../../utils/interface";
+import {Collaborator, PinData} from "../../utils/interface";
 import {ApiHelperService} from "../../service/api-helper.service";
 import {IDropdownSettings, NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 
@@ -24,13 +24,13 @@ export class CreatePinComponent implements OnInit{
   modal = inject(NgbActiveModal);
   pinForm!:FormGroup<{
     title: FormControl<string | null>,
-    collaborators: FormControl<Customer[] | null>,
+    collaborators: FormControl<Collaborator[] | null>,
     privacy: FormControl<string | null>,
     image: FormControl<any|null>
   }>
-  collaborators!:Customer[];
+  collaborators!:Collaborator[];
   settings!:IDropdownSettings
-  selectedCollaborators!: Customer[];
+  selectedCollaborators!: Collaborator[];
 
   constructor(private apiHelper: ApiHelperService) {
   }
@@ -58,6 +58,7 @@ export class CreatePinComponent implements OnInit{
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
       defaultOpen: false,
+      noDataAvailablePlaceholderText: "Please add Collaborator first"
     };
   }
 

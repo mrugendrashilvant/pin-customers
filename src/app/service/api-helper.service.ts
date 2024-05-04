@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, map,of} from "rxjs";
-import {Customer, PinData} from "../utils/interface";
+import {Collaborator, PinData} from "../utils/interface";
 
 const PARAMS = new HttpParams();
 
@@ -15,14 +15,14 @@ export class ApiHelperService {
     public http: HttpClient,
   ) { }
 
-  saveCustomer(customer: Customer) {
-    let customers = localStorage.getItem("customerData");
-    let newCustomers: Customer[] = [];
-    if(customers) {
-      newCustomers = [...JSON.parse(customers) as Customer[]];
+  saveCustomer(collaborator: Collaborator) {
+    let collaborators = localStorage.getItem("collaboratorData");
+    let newCollaborators: Collaborator[] = [];
+    if(collaborators) {
+      newCollaborators = [...JSON.parse(collaborators) as Collaborator[]];
     }
-    newCustomers.push(customer);
-    localStorage.setItem("customerData", JSON.stringify(newCustomers));
+    newCollaborators.push(collaborator);
+    localStorage.setItem("collaboratorData", JSON.stringify(newCollaborators));
   }
 
   savePinData(pinData: PinData) {
@@ -36,13 +36,13 @@ export class ApiHelperService {
     localStorage.setItem("pinData", JSON.stringify(newPins));
   }
 
-  getCustomers():Customer[] {
-    let customers = localStorage.getItem("customerData");
-    let newCustomers: Customer[] = [];
-    if(customers) {
-      newCustomers = [...JSON.parse(customers) as Customer[]];
+  getCustomers():Collaborator[] {
+    let collaborators = localStorage.getItem("collaboratorData");
+    let newCollaborators: Collaborator[] = [];
+    if(collaborators) {
+      newCollaborators = [...JSON.parse(collaborators) as Collaborator[]];
     }
-    return newCustomers;
+    return newCollaborators;
   }
 
   getPinData() {

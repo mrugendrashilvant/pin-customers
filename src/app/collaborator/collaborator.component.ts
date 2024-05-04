@@ -4,20 +4,20 @@ import {CommonModule} from "@angular/common";
 import {NgbActiveModal, NgbTypeahead} from "@ng-bootstrap/ng-bootstrap";
 import {catchError, debounceTime, distinctUntilChanged, Observable, of, OperatorFunction, switchMap, tap} from "rxjs";
 import {ApiHelperService} from "../service/api-helper.service";
-import {Customer} from "../utils/interface";
+import {Collaborator} from "../utils/interface";
 
 @Component({
-  selector: 'app-customer',
+  selector: 'app-collaborator',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     CommonModule,
     NgbTypeahead
   ],
-  templateUrl: './customer.component.html',
-  styleUrl: './customer.component.scss'
+  templateUrl: './collaborator.component.html',
+  styleUrl: './collaborator.component.scss'
 })
-export class CustomerComponent {
+export class CollaboratorComponent {
   modal = inject(NgbActiveModal);
   registerUser = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -41,7 +41,7 @@ export class CustomerComponent {
     this.registerUser.markAsTouched();
     this.registerUser.markAllAsTouched();
     if(this.registerUser.valid){
-      this.apiHelper.saveCustomer(this.registerUser.getRawValue() as Customer);
+      this.apiHelper.saveCustomer(this.registerUser.getRawValue() as Collaborator);
       this.registerUser.reset();
       this.modal.close();
       return;
