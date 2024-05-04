@@ -6,6 +6,7 @@ import {PinData} from "./utils/interface";
 import {PrivacyOptions} from "./utils/enum";
 import {CustomerComponent} from "./customer/customer.component";
 import {HttpClientModule} from "@angular/common/http";
+import {CreatePinComponent} from "./pin/create-pin/create-pin.component";
 
 
 const PINS: PinData[] = [
@@ -40,6 +41,10 @@ export class AppComponent {
         })
         break;
       case "pin":
+        this.modal.open(CreatePinComponent, {
+          centered: true,
+          size: 'lg',
+        })
         break;
     }
   }

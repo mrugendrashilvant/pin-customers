@@ -24,6 +24,16 @@ export class ApiHelperService {
     localStorage.setItem("customerData", JSON.stringify(newCustomers));
   }
 
+  getCustomers():Customer[] {
+    let customers = localStorage.getItem("customerData");
+    let newCustomers: Customer[] = [];
+    if(customers) {
+      newCustomers = [...JSON.parse(customers) as Customer[]];
+    }
+
+    return newCustomers;
+  }
+
   getRegion(region:string) {
     if (region === '') {
       return of([]);
